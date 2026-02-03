@@ -72,7 +72,7 @@ Recent work (Feb 2025) achieved a complete solution using <10M parameters - this
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/pokemon-rl-deployment
+git clone https://github.com/dingjamma/pokemon-rl-deployment
 cd pokemon-rl-deployment
 
 # Create virtual environment
