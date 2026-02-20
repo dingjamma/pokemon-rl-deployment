@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+venv/
+.venv/
+env/
+.env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# PyTorch checkpoints (keep directory, ignore large binaries)
+checkpoints/*.pt
+checkpoints/*.pth
+checkpoints/*.ckpt
+
+# ROM files (legally sensitive — never commit)
+roms/*.gb
+roms/*.gbc
+roms/*.gba
+
+# TensorBoard logs
+runs/
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Byte-compiled / optimized
+*.pyc
+
+# Test coverage
+.coverage
+htmlcov/
+.pytest_cache/
