@@ -1,0 +1,40 @@
+# baseline.yaml — mirrors paper-scale settings (Pleines et al., 2025)
+# Use this for longer training runs with more parallel environments.
+
+env:
+  rom_path: "./roms/PokemonRed.gb"
+  frame_skip: 24          # Ticks per step (~0.4s game-time per action)
+  obs_height: 84
+  obs_width: 84
+  grayscale: true
+  frame_stack: 4          # Stack last N frames for temporal context
+  max_steps: 20480        # Max steps per episode before forced reset
+  reward:
+    badge_reward: 4.0     # Per new badge earned
+    explore_reward: 0.01  # Per new (map, x, y) tile visited
+    level_reward: 0.01    # Per pokemon level gained
+
+training:
+  num_envs: 16
+  num_workers: 8          # Parallel worker processes (set <= num CPUs)
+  total_timesteps: 10_000_000
+  batch_size: 8192        # Steps collected per update
+  minibatch_size: 1024    # Minibatch size within each PPO epoch
+  update_epochs: 4        # PPO update passes per batch
+  learning_rate: 2.5e-4
+  anneal_lr: true         # Linearly decay LR to 0 over training
+  gamma: 0.99             # Discount factor
+  gae_lambda: 0.95        # GAE smoothing parameter
+  clip_coef: 0.2          # PPO clip coefficient
+  ent_coef: 0.01          # Entropy bonus coefficient
+  vf_coef: 0.5            # Value function loss coefficient
+  max_grad_norm: 0.5      # Gradient clipping norm
+
+checkpointing:
+  save_dir: "./checkpoints"
+  save_interval: 100      # Save every N policy updates
+
+logging:
+  tensorboard_dir: "./runs"
+  run_name: "baseline"
+  log_interval: 10        # Log every N policy updates

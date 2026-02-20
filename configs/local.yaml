@@ -1,0 +1,42 @@
+# local.yaml — sensible defaults for local CPU training
+# Tuned for a single machine with 4–8 cores and no GPU required.
+# Expect slower wall-clock speed than a cloud instance; good for
+# debugging, smoke-testing, and short training runs.
+
+env:
+  rom_path: "./roms/PokemonRed.gb"
+  frame_skip: 24          # Ticks per step (~0.4s game-time per action)
+  obs_height: 84
+  obs_width: 84
+  grayscale: true
+  frame_stack: 4          # Stack last N frames for temporal context
+  max_steps: 4096         # Shorter episodes for faster iteration locally
+  reward:
+    badge_reward: 4.0
+    explore_reward: 0.01
+    level_reward: 0.01
+
+training:
+  num_envs: 4             # Keep low for local CPU; increase if you have cores
+  num_workers: 2          # Parallel worker processes
+  total_timesteps: 500_000
+  batch_size: 2048        # Steps collected per update
+  minibatch_size: 256     # Minibatch size within each PPO epoch
+  update_epochs: 4
+  learning_rate: 2.5e-4
+  anneal_lr: true
+  gamma: 0.99
+  gae_lambda: 0.95
+  clip_coef: 0.2
+  ent_coef: 0.01
+  vf_coef: 0.5
+  max_grad_norm: 0.5
+
+checkpointing:
+  save_dir: "./checkpoints"
+  save_interval: 50       # Save every N policy updates
+
+logging:
+  tensorboard_dir: "./runs"
+  run_name: "local"
+  log_interval: 5
