@@ -32,7 +32,7 @@ class RedGymEnv(Env):
         self.print_rewards = config['print_rewards']
         self.vec_dim = 4320 #1000
         self.headless = config['headless']
-        self.num_elements = 20000 # max
+        self.num_elements = 5000 # max
         self.init_state = config['init_state']
         self.act_freq = config['action_freq']
         self.max_steps = config['max_steps']
@@ -97,18 +97,15 @@ class RedGymEnv(Env):
         self.action_space = spaces.Discrete(len(self.valid_actions))
         self.observation_space = spaces.Box(low=0, high=255, shape=self.output_full, dtype=np.uint8)
 
-        head = 'headless' if config['headless'] else 'SDL2'
+        head = 'null' if config['headless'] else 'SDL2'
 
         #log_level("ERROR")
         self.pyboy = PyBoy(
                 config['gb_path'],
-                debugging=False,
-                disable_input=False,
-                window_type=head,
-                hide_window='--quiet' in sys.argv,
+                window=head,
             )
 
-        self.screen = self.pyboy.botsupport_manager().screen()
+        self.screen = self.pyboy.screen
 
         if not config['headless']:
             self.pyboy.set_emulation_speed(6)
@@ -171,7 +168,7 @@ class RedGymEnv(Env):
         self.seen_coords = {}
 
     def render(self, reduce_res=True, add_memory=True, update_mem=True):
-        game_pixels_render = self.screen.screen_ndarray() # (144, 160, 3)
+        game_pixels_render = self.screen.ndarray[:, :, :3] # (144, 160, 3), drop alpha channel
         if reduce_res:
             game_pixels_render = (255*resize(game_pixels_render, self.output_shape)).astype(np.uint8)
             if update_mem:
@@ -234,8 +231,7 @@ class RedGymEnv(Env):
         # press button then release after some steps
         self.pyboy.send_input(self.valid_actions[action])
         # disable rendering when we don't need it
-        if not self.save_video and self.headless:
-            self.pyboy._rendering(False)
+        render_this_step = not self.headless or self.save_video
         for i in range(self.act_freq):
             # release action, so they are stateless
             if i == 8:
@@ -243,15 +239,15 @@ class RedGymEnv(Env):
                     # release arrow
                     self.pyboy.send_input(self.release_arrow[action])
                 if action > 3 and action < 6:
-                    # release button 
+                    # release button
                     self.pyboy.send_input(self.release_button[action - 4])
                 if self.valid_actions[action] == WindowEvent.PRESS_BUTTON_START:
                     self.pyboy.send_input(WindowEvent.RELEASE_BUTTON_START)
             if self.save_video and not self.fast_video:
                 self.add_video_frame()
-            if i == self.act_freq-1:
-                self.pyboy._rendering(True)
-            self.pyboy.tick()
+            # only render on last tick (or every tick if showing window/video)
+            do_render = render_this_step or (i == self.act_freq - 1)
+            self.pyboy.tick(1, render=do_render)
         if self.save_video and self.fast_video:
             self.add_video_frame()
     
@@ -429,7 +425,7 @@ class RedGymEnv(Env):
                 self.s_path / Path(f'agent_stats_{self.instance_id}.csv.gz'), compression='gzip', mode='a')
     
     def read_m(self, addr):
-        return self.pyboy.get_memory_value(addr)
+        return self.pyboy.memory[addr]
 
     def read_bit(self, addr, bit: int) -> bool:
         # add padding so zero will read '0b100000000' instead of '0b0'

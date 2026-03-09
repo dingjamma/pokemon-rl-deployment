@@ -1,5 +1,7 @@
 # Train RL agents to play Pokemon Red
 
+> **Status (March 2026):** Training paused — picking up more storage before resuming. Running on a 24-core local machine with 34GB RAM. Will update with results once back online.
+
 ### New 1-29-24! - [Multiplayer Live Training Broadcast](https://github.com/pwhiddy/pokerl-map-viz/)  🎦 🔴 [View Here](https://pwhiddy.github.io/pokerl-map-viz/)
 Stream your training session to a shared global game map using the [Broadcast Wrapper](/baselines/stream_agent_wrapper.py)  
 
