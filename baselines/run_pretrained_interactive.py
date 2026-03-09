@@ -30,9 +30,10 @@ if __name__ == '__main__':
 
     env_config = {
                 'headless': False, 'save_final_state': True, 'early_stop': False,
-                'action_freq': 24, 'init_state': '../has_pokedex_nballs.state', 'max_steps': ep_length, 
+                'action_freq': 24, 'init_state': '../has_pokedex_nballs.state', 'max_steps': ep_length,
                 'print_rewards': True, 'save_video': False, 'fast_video': True, 'session_path': sess_path,
-                'gb_path': '../PokemonRed.gb', 'debug': False, 'sim_frame_dist': 2_000_000.0, 'extra_buttons': True
+                'gb_path': '../PokemonRed.gb', 'debug': False, 'sim_frame_dist': 2_000_000.0,
+                'use_screen_explore': True, 'reward_scale': 4, 'explore_weight': 3, 'extra_buttons': True
             }
     
     num_cpu = 1 #64 #46  # Also sets the number of episodes per training iteration
@@ -42,7 +43,7 @@ if __name__ == '__main__':
     file_name = 'session_4da05e87_main_good/poke_439746560_steps'
     
     print('\nloading checkpoint')
-    model = PPO.load(file_name, env=env, custom_objects={'lr_schedule': 0, 'clip_range': 0})
+    model = PPO.load(file_name, custom_objects={'lr_schedule': 0, 'clip_range': 0})
         
     #keyboard.on_press_key("M", toggle_agent)
     obs, info = env.reset()
