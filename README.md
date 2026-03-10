@@ -1,6 +1,6 @@
 # Train RL agents to play Pokemon Red
 
-> **Status (March 2026):** Training paused — picking up more storage before resuming. Running on a 24-core local machine with 34GB RAM. Will update with results once back online.
+> **Status (March 2026):** Training live! Running on a local machine with 16 parallel environments. Tracking progress with TensorBoard and W&B.
 
 ### New 1-29-24! - [Multiplayer Live Training Broadcast](https://github.com/pwhiddy/pokerl-map-viz/)  🎦 🔴 [View Here](https://pwhiddy.github.io/pokerl-map-viz/)
 Stream your training session to a shared global game map using the [Broadcast Wrapper](/baselines/stream_agent_wrapper.py)  
@@ -81,6 +81,7 @@ You can track the progress in tensorboard by moving into the session directory a
 ```tensorboard --logdir .```  
 You can then navigate to `localhost:6006` in your browser to view metrics.  
 To enable wandb integration, change `use_wandb_logging` in the training script to `True`.
+W&B live training dashboard: https://wandb.ai/dingjamma/pokemon-train
 
 ## Static Visualization 🐜
 Map visualization code can be found in `visualization/` directory.
