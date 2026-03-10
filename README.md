@@ -1,5 +1,7 @@
 # Train RL agents to play Pokemon Red
 
+> **Original project by [Peter Whidden (PWhiddy)](https://github.com/PWhiddy/PokemonRedExperiments)** — I'm running this myself to learn RL. All credit for the core idea and implementation goes to him.
+
 > **Status (March 2026):** Training live! Running on a local machine with 16 parallel environments. Tracking progress with TensorBoard and W&B.
 
 ## Watch the Video on Youtube!
