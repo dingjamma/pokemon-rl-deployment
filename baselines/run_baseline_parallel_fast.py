@@ -29,7 +29,7 @@ if __name__ == '__main__':
     use_wandb_logging = True
     ep_length = 2048 * 10
     sess_id = str(uuid.uuid4())[:8]
-    sess_path = Path(f'session_{sess_id}')
+    sess_path = Path(f'D:/pokemon_sessions/session_{sess_id}')
 
     env_config = {
                 'headless': True, 'save_final_state': True, 'early_stop': False,
@@ -42,7 +42,7 @@ if __name__ == '__main__':
     
     print(env_config)
     
-    num_cpu = 1  # Also sets the number of episodes per training iteration
+    num_cpu = 16  # Also sets the number of episodes per training iteration
     env = SubprocVecEnv([make_env(i, env_config) for i in range(num_cpu)])
     
     checkpoint_callback = CheckpointCallback(save_freq=ep_length, save_path=sess_path,

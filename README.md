@@ -45,7 +45,7 @@ Run:
 ## Tracking Training Progress 📈
 
 ### Local Metrics
-The current state of each game is rendered to images in the session directory.
+The current state of each game is rendered to images in the session directory (`D:/pokemon_sessions/` on Windows).
 You can track the progress in tensorboard by moving into the session directory and running:
 ```tensorboard --logdir .```
 You can then navigate to `localhost:6006` in your browser to view metrics.
