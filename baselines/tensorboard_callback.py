@@ -2,6 +2,7 @@ from stable_baselines3.common.callbacks import BaseCallback
 from stable_baselines3.common.logger import Image
 import numpy as np
 from einops import rearrange
+from pathlib import Path
 
 def merge_dicts_by_mean(dicts):
     sum_dict = {}
@@ -18,6 +19,21 @@ def merge_dicts_by_mean(dicts):
         mean_dict[k] = sum_dict[k] / count_dict[k]
 
     return mean_dict
+
+class KeepLastNCheckpoints(BaseCallback):
+    def __init__(self, save_path, name_prefix='poke', n=3, verbose=0):
+        super().__init__(verbose)
+        self.save_path = Path(save_path)
+        self.name_prefix = name_prefix
+        self.n = n
+
+    def _on_step(self) -> bool:
+        checkpoints = sorted(self.save_path.glob(f'{self.name_prefix}_*.zip'),
+                             key=lambda p: p.stat().st_mtime)
+        for old in checkpoints[:-self.n]:
+            old.unlink()
+        return True
+
 
 class TensorboardCallback(BaseCallback):
 

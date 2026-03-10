@@ -103,6 +103,7 @@ class RedGymEnv(Env):
         self.pyboy = PyBoy(
                 config['gb_path'],
                 window=head,
+                sound=False,
             )
 
         self.screen = self.pyboy.screen
@@ -319,8 +320,7 @@ class RedGymEnv(Env):
         new_total = sum([val for _, val in self.progress_reward.items()]) #sqrt(self.explore_reward * self.progress_reward)
         new_step = new_total - self.total_reward
         if new_step < 0 and self.read_hp_fraction() > 0:
-            #print(f'\n\nreward went down! {self.progress_reward}\n\n')
-            self.save_screenshot('neg_reward')
+            pass #self.save_screenshot('neg_reward')
     
         self.total_reward = new_total
         return (new_step, 

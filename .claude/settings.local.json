@@ -1,0 +1,34 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pip show:*)",
+      "Bash(pip install:*)",
+      "Bash(python:*)",
+      "Bash(ls:*)",
+      "Bash(du:*)",
+      "Bash(pip cache:*)",
+      "Bash(taskkill:*)",
+      "Bash(powershell:*)",
+      "Bash(git:*)",
+      "Bash(cd \"D:/PokemonRedExperiments/baselines\" && tensorboard --logdir session_3e0c5b7a)",
+      "Bash(wandb login:*)",
+      "Bash(taskkill /F /FI \"WINDOWTITLE eq python*\" /IM python.exe 2>/dev/null; pkill -f run_baseline_parallel_fast.py 2>/dev/null; true)",
+      "Bash(until ls:*)",
+      "Bash(echo \"yes\" > \"D:/PokemonRedExperiments/baselines/agent_enabled.txt\")",
+      "Bash(wmic process:*)",
+      "Bash(for pid:*)",
+      "Bash(cmd /c \"dir /ad C:\\\\Users\\\\dingj\\\\AppData\\\\Local\\\\Temp\")",
+      "Bash(cmd /c \"dir C:\\\\Users\\\\dingj\\\\AppData\\\\Local\\\\Temp 2>&1\")",
+      "Bash(cmd /c \"rd /s /q C:\\\\Users\\\\dingj\\\\AppData\\\\Local\\\\Temp & mkdir C:\\\\Users\\\\dingj\\\\AppData\\\\Local\\\\Temp\")",
+      "Bash(wmic logicaldisk:*)",
+      "Bash(cmd /c \"rd /s /q C:\\\\Windows\\\\Temp & mkdir C:\\\\Windows\\\\Temp\" 2>/dev/null; cmd /c \"rd /s /q C:\\\\Users\\\\dingj\\\\AppData\\\\Local\\\\Temp & mkdir C:\\\\Users\\\\dingj\\\\AppData\\\\Local\\\\Temp\" 2>/dev/null; echo done)",
+      "Bash(aws --version 2>/dev/null && aws configure list 2>/dev/null)",
+      "Bash(aws sts:*)",
+      "Bash(claude --version)",
+      "Bash(npm view:*)",
+      "Bash(ssh -i \"C:/Users/dingj/PokemonRedExperiments/pokemon-red-rl.pem\" -o StrictHostKeyChecking=no ubuntu@54.202.160.34)",
+      "Bash(ssh -i \"C:/Users/dingj/PokemonRedExperiments/pokemon-red-rl.pem\" -o StrictHostKeyChecking=no ubuntu@54.202.160.34 \"curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash - && sudo apt install -y nodejs && npm install -g @anthropic-ai/claude-code\")",
+      "Bash(ssh -i \"C:/Users/dingj/PokemonRedExperiments/pokemon-red-rl.pem\" -o StrictHostKeyChecking=no ubuntu@54.202.160.34 \"sudo npm install -g @anthropic-ai/claude-code\")"
+    ]
+  }
+}
