@@ -7,7 +7,7 @@ from stable_baselines3.common import env_checker
 from stable_baselines3.common.vec_env import DummyVecEnv, SubprocVecEnv
 from stable_baselines3.common.utils import set_random_seed
 from stable_baselines3.common.callbacks import CheckpointCallback, CallbackList
-from tensorboard_callback import TensorboardCallback
+from tensorboard_callback import TensorboardCallback, KeepLastNCheckpoints
 
 def make_env(rank, env_conf, seed=0):
     """
@@ -26,7 +26,7 @@ def make_env(rank, env_conf, seed=0):
 
 if __name__ == '__main__':
 
-    use_wandb_logging = False
+    use_wandb_logging = True
     ep_length = 2048 * 10
     sess_id = str(uuid.uuid4())[:8]
     sess_path = Path(f'session_{sess_id}')
@@ -42,13 +42,13 @@ if __name__ == '__main__':
     
     print(env_config)
     
-    num_cpu = 16  # Also sets the number of episodes per training iteration
+    num_cpu = 1  # Also sets the number of episodes per training iteration
     env = SubprocVecEnv([make_env(i, env_config) for i in range(num_cpu)])
     
     checkpoint_callback = CheckpointCallback(save_freq=ep_length, save_path=sess_path,
                                      name_prefix='poke')
-    
-    callbacks = [checkpoint_callback, TensorboardCallback()]
+
+    callbacks = [checkpoint_callback, TensorboardCallback(), KeepLastNCheckpoints(sess_path, n=3)]
 
     if use_wandb_logging:
         import wandb
