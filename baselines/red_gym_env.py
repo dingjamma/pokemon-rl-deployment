@@ -265,6 +265,8 @@ class RedGymEnv(Env):
             expl = ('frames', self.knn_index.get_current_count())
         else:
             expl = ('coord_count', len(self.seen_coords))
+        if self.step_count % 100 != 0:
+            return
         self.agent_stats.append({
             'step': self.step_count, 'x': x_pos, 'y': y_pos, 'map': map_n,
             'map_location': self.get_map_location(map_n),
@@ -422,7 +424,7 @@ class RedGymEnv(Env):
             with open(self.s_path / Path(f'all_runs_{self.instance_id}.json'), 'w') as f:
                 json.dump(self.all_runs, f)
             pd.DataFrame(self.agent_stats).to_csv(
-                self.s_path / Path(f'agent_stats_{self.instance_id}.csv.gz'), compression='gzip', mode='a')
+                self.s_path / Path(f'agent_stats_{self.instance_id}.csv.gz'), compression='gzip', mode='w')
     
     def read_m(self, addr):
         return self.pyboy.memory[addr]

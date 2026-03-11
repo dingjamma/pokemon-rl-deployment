@@ -29,7 +29,7 @@ if __name__ == '__main__':
     use_wandb_logging = True
     ep_length = 2048 * 10
     sess_id = str(uuid.uuid4())[:8]
-    sess_path = Path(f'D:/pokemon_sessions/session_{sess_id}')
+    sess_path = Path(__file__).parent.parent / f'sessions/session_{sess_id}'
 
     env_config = {
                 'headless': True, 'save_final_state': True, 'early_stop': False,
@@ -57,9 +57,10 @@ if __name__ == '__main__':
             project="pokemon-train",
             id=sess_id,
             config=env_config,
-            sync_tensorboard=True,  
-            monitor_gym=True,  
-            save_code=True,
+            sync_tensorboard=True,
+            monitor_gym=True,
+            save_code=False,
+            dir=sess_path,
         )
         callbacks.append(WandbCallback())
 
