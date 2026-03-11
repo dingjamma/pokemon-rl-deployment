@@ -47,11 +47,17 @@ Run:
 ## Tracking Training Progress 📈
 
 ### Local Metrics
-The current state of each game is rendered to images in the session directory (`D:/pokemon_sessions/` on Windows).
+Sessions are saved to `sessions/session_<id>/` in the project directory. The current state of each game is rendered to images there.
 You can track the progress in tensorboard by moving into the session directory and running:
 ```tensorboard --logdir .```
 You can then navigate to `localhost:6006` in your browser to view metrics.
 W&B live training dashboard: https://wandb.ai/dingjamma/pokemon-train
+
+### Disk Space
+Training is optimized to stay within ~200GB:
+- Agent stats are sampled every 100 steps (not every step) and overwrite each episode rather than appending
+- TensorBoard screen images are logged every 10 episodes
+- W&B local files are written inside the session folder and code snapshots are disabled
 
 ## Static Visualization 🐜
 Map visualization code can be found in `visualization/` directory.
